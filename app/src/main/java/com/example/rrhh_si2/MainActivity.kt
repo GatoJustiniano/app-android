@@ -1,6 +1,5 @@
 package com.example.rrhh_si2
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,8 +7,13 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.rrhh_si2.PreferenceHelper.get
 import com.example.rrhh_si2.PreferenceHelper.set
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
+
+    private val snackBar by lazy {
+        Snackbar.make(mainLayout, R.string.press_back_again, Snackbar.LENGTH_SHORT)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,5 +63,12 @@ class MainActivity : AppCompatActivity() {
         val preferences = PreferenceHelper.defaultPrefs(this)
         preferences["session"] = true
 
+    }
+
+    override fun onBackPressed() {
+        if (snackBar.isShown)
+            super.onBackPressed()
+        else
+            snackBar.show()
     }
 }
