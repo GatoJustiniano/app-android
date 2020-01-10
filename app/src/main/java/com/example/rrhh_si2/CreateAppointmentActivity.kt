@@ -6,9 +6,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.activity_create_appointment.*
+import kotlinx.android.synthetic.main.card_view_step_one.*
+import kotlinx.android.synthetic.main.card_view_step_three.*
+import kotlinx.android.synthetic.main.card_view_step_two.*
 import java.util.*
 
 class CreateAppointmentActivity : AppCompatActivity() {
@@ -31,6 +34,12 @@ class CreateAppointmentActivity : AppCompatActivity() {
             }
         }
 
+        btnNext2.setOnClickListener{
+            showAppointmentDataToConfirm()
+            cvStep2.visibility = View.GONE
+            cvStep3.visibility = View.VISIBLE
+        }
+
         btnConfirmAppointment.setOnClickListener {
             Toast.makeText(this, "Cita registrada correctamente!", Toast.LENGTH_SHORT).show()
             finish()
@@ -41,6 +50,20 @@ class CreateAppointmentActivity : AppCompatActivity() {
 
         val doctorOptions = arrayOf("Doctor A","Doctor B","Doctor C")
         spinnerDoctors.adapter =  ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, doctorOptions)
+    }
+
+    private fun showAppointmentDataToConfirm() {
+        tvConfirmDescription.text = etDescription.text.toString()
+        tvConfirmSpeciality.text = spinnerSpecialities.selectedItem.toString()
+
+
+        val selectedRadioBtnId = radioGroupType.checkedRadioButtonId
+        val selectedRadioType = radioGroupType.findViewById<RadioButton>(selectedRadioBtnId)
+        tvConfirmType.text = selectedRadioType.text.toString()
+
+        tvConfirmDoctorName.text = spinnerDoctors.selectedItem.toString()
+        tvConfirmDate.text = etScheduledDate.text.toString()
+        tvConfirmTime.text = selectedRadioButton?.text.toString()
     }
 
     fun onClickScheduledDate(v: View?){
@@ -115,26 +138,31 @@ class CreateAppointmentActivity : AppCompatActivity() {
     private fun Int.twoDigits() = if(this<=9) "0$this" else this.toString()
 
     override fun onBackPressed() {
-
-        if (cvStep2.visibility == View.VISIBLE){
-            cvStep2.visibility = View.GONE
-            cvStep1.visibility = View.VISIBLE
-        }
-        else if (cvStep1.visibility == View.VISIBLE ) {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle(getString(R.string.dialog_create_appointment_exit_title))
-            builder.setMessage(getString(R.string.dialog_create_appointment_exit_message))
-            builder.setPositiveButton(getString(R.string.dialog_create_appointment_exit_positive_btn)) {
-                    _, _ ->
-                finish()
+        when {
+            cvStep3.visibility == View.VISIBLE -> {
+                cvStep3.visibility = View.GONE
+                cvStep2.visibility = View.VISIBLE
             }
-            builder.setNegativeButton(getString(R.string.dialog_create_appointment_exit_negative_btn)) {
-                    dialog, _ ->
-                dialog.dismiss()
+            cvStep2.visibility == View.VISIBLE -> {
+                cvStep2.visibility = View.GONE
+                cvStep1.visibility = View.VISIBLE
             }
+            cvStep1.visibility == View.VISIBLE -> {
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle(getString(R.string.dialog_create_appointment_exit_title))
+                builder.setMessage(getString(R.string.dialog_create_appointment_exit_message))
+                builder.setPositiveButton(getString(R.string.dialog_create_appointment_exit_positive_btn)) {
+                        _, _ ->
+                    finish()
+                }
+                builder.setNegativeButton(getString(R.string.dialog_create_appointment_exit_negative_btn)) {
+                        dialog, _ ->
+                    dialog.dismiss()
+                }
 
-            val dialog = builder.create()
-            dialog.show()
+                val dialog = builder.create()
+                dialog.show()
+            }
         }
 
     }

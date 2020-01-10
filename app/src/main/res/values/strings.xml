@@ -16,7 +16,7 @@
     <string name="label_welcome">Bienvenido</string>
     <string name="label_create_appointment">Reservar cita</string>
     <string name="label_description">Descripción</string>
-    <string name="label_especiality">Especialidad</string>
+    <string name="label_speciality">Especialidad</string>
     <string name="label_type">Tipo de cita</string>
     <string name="type1">Consulta</string>
     <string name="type2">Examen</string>
@@ -37,6 +37,8 @@
     <string name="dialog_create_appointment_exit_positive_btn">Si, salir!</string>
     <string name="dialog_create_appointment_exit_negative_btn">Continuar...</string>
     <string name="validate_appointment_description">La descripción es demasiado corta!</string>
+    <string name="label_schedule_time">Hora de la cita médica</string>
+    <string name="label_confirm_appointment_data">Datos de la cita:</string>
 
 
 </resources>
