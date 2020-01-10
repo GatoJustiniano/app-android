@@ -22,7 +22,6 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvStep1"
-        android:visibility="gone"
         app:contentPadding="12dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
@@ -48,8 +47,10 @@
 
 
                 <EditText
+                    android:id="@+id/etDescription"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -75,7 +76,7 @@
                     android:orientation="vertical">
 
                     <RadioButton
-
+                        android:checked="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/type1" />
@@ -112,6 +113,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvStep2"
+        android:visibility="gone"
 
         app:contentPadding="12dp"
         app:cardCornerRadius="8dp"
